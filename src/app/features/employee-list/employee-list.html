@@ -1,0 +1,70 @@
+<div class="employee-management-container">
+
+  <div class="toolbar">
+    <div class="search-section">
+      <input type="text" placeholder="Search name..." [(ngModel)]="searchTerm" (input)="applyFilters()"
+        class="search-input" />
+      <input type="text" placeholder="Search group..." [(ngModel)]="searchGroup" (input)="applyFilters()"
+        class="search-input" />
+
+      <select [(ngModel)]="pageSize" (ngModelChange)="changeItemsPerPage($event)" class="page-size-select">
+        <option [value]="5">5 per page</option>
+        <option [value]="10">10 per page</option>
+        <option [value]="20">20 per page</option>
+      </select>
+
+    </div>
+
+    <div class="action-section">
+      <button class="add-button" (click)="addNewEmployee()">Add New Employee</button>
+    </div>
+  </div>
+
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('username')">Username</th>
+        <th (click)="sortBy('firstName')">First Name</th>
+        <th (click)="sortBy('lastName')">Last Name</th>
+        <th (click)="sortBy('email')">Email</th>
+        <th (click)="sortBy('group')">Group</th>
+        <th (click)="sortBy('status')">Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of paginatedEmployees(); trackBy: trackByUsername">
+        <td>{{ emp.username }}</td>
+        <td>{{ emp.firstName }}</td>
+        <td>{{ emp.lastName }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.group }}</td>
+        <td>{{ emp.status }}</td>
+        <td>
+          <button class="edit-button" (click)="editEmployee(emp)">Edit</button>
+          <button class="delete-button" (click)="deleteEmployee(emp)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-wrapper">
+    <div class="pagination">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+      <div class="page-numbers">
+        <button *ngFor="let page of pageNumbers" (click)="changePage(page)" [disabled]="currentPage === page">
+          {{ page }}
+        </button>
+      </div>
+
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
+    <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+  </div>
+
+  <app-toast></app-toast>
+  <app-confirm-dialog></app-confirm-dialog>
+
+</div>

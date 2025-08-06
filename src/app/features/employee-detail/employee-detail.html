@@ -1,0 +1,91 @@
+<div class="employee-detail-container" *ngIf="employee; else notFound">
+  <div class="form-card">
+    <div class="form-title">
+      <h2 *ngIf="isEditMode">Edit Employee: {{ employee.firstName }} {{ employee.lastName }}</h2>
+      <h2 *ngIf="!isEditMode">Add New Employee</h2>
+    </div>
+
+    <form (ngSubmit)="save()" #employeeForm="ngForm" class="form">
+      <div class="form-group">
+        <label>
+          Username:
+          <input type="text" [(ngModel)]="employee.username" name="username" [disabled]="isEditMode" />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          First Name:
+          <input type="text" [(ngModel)]="employee.firstName" name="firstName" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Last Name:
+          <input type="text" [(ngModel)]="employee.lastName" name="lastName" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Email:
+          <input type="email" [(ngModel)]="employee.email" name="email" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Birth Date:
+          <input type="date" [value]="_birthDate" (change)="onBirthDateChange($event.target.value)" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Basic Salary:
+          <input type="text" [value]="displaySalaryWithPrefix" (input)="onSalaryInput($event)"
+            (keydown)="onSalaryKeydown($event)" (focus)="onSalaryFocus($event)" inputmode="numeric" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Status:</label>
+        <div class="form-input">
+          <label class="radio-option">
+            <input type="radio" name="status" [(ngModel)]="employee.status" value="Active" />
+            Active
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="status" [(ngModel)]="employee.status" value="Inactive" />
+            Inactive
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Group:
+          <input type="text" [(ngModel)]="employee.group" name="group" required />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Description:
+          <textarea [(ngModel)]="employee.description" name="description"></textarea>
+        </label>
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" (click)="goBack()">Cancel</button>
+        <button type="submit" [disabled]="!employeeForm.form.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <p>Employee not found.</p>
+  <button (click)="goBack()">Back to list</button>
+</ng-template>

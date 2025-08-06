@@ -1,0 +1,9 @@
+<div *ngIf="dialog$ | async as dialog" class="confirm-backdrop">
+  <div class="confirm-modal">
+    <p>{{ dialog.message }}</p>
+    <div class="confirm-buttons">
+      <button (click)="dialog.onConfirm()" class="yes">Yes</button>
+      <button (click)="dialog.onCancel()" class="no">No</button>
+    </div>
+  </div>
+</div>

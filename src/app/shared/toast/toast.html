@@ -1,0 +1,10 @@
+<div
+  *ngFor="let toast of toastService.toasts$ | async"
+  class="toast show"
+  [ngClass]="toast.classname"
+  style="position: fixed; bottom: 1rem; right: 1rem; z-index: 9999; background: rgba(0,0,0,0.8); color: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;"
+>
+  <div class="toast-body">
+    {{ toast.text }}
+  </div>
+</div>
